@@ -1,26 +1,54 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component, Fragment } from 'react';
+import Header from './components/Header';
+import ListaNoticias from './components/ListaNoticias';
+import Formulario from './components/Formulario';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+
+  state = {
+    articles: []
+  }
+
+  componentDidMount() {
+    this.getArticles() 
+  }
+
+  getArticles = async (category = 'general') => {
+
+    const url = `https://newsapi.org/v2/top-headlines?country=us&category=${category}&apiKey=your_api_key`
+
+    try {
+
+      const response = await fetch(url)
+      const noticias = await response.json()
+
+      if( noticias.status === 'ok') {
+
+      }
+      this.setState({
+        articles: noticias.articles
+      })
+
+    }catch(e) {
+      console.log(e);
+    }
+  }
+
+  render() {
+    return (
+      <Fragment>
+        <Header titulo="Noticias React Api" />
+
+        <div className="container white contenedor-noticias" >
+
+          <Formulario getArticles={this.getArticles} />
+
+          <ListaNoticias articles={this.state.articles} />
+        </div>
+      </Fragment>
+    )
+  }
 }
+// 354968930ffd4051bf7892cd6631c3d0
 
-export default App;
+export default App

@@ -1,5 +1,7 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Debes obtener una key desde newsApi para poder generar las noticias
+
 ## Available Scripts
 
 In the project directory, you can run:
